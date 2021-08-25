@@ -39,3 +39,15 @@ services:
     working_dir: /scripts
     volumes:
     - ./scripts:/scripts
+    
+  jupyterlab:
+    image: jupyter/pyspark-notebook
+    container_name: jupyterlab
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    ports:
+      - 8888:8888
+    volumes:
+      - shared-workspace:/opt/workspace
+    networks:
+      - localnet

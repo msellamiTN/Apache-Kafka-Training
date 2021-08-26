@@ -14,7 +14,9 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
-
+    networks:
+      - kafka-netwrok
+      
   kafka:
     image: confluentinc/cp-enterprise-kafka:6.0.0
     hostname: kafka
@@ -32,7 +34,8 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-
+    networks:
+      - kafka-netwrok  
   kafka-create-topics:
     image: confluentinc/cp-enterprise-kafka:6.0.0
     depends_on:
@@ -42,7 +45,8 @@ services:
     working_dir: /scripts
     volumes:
     - ./scripts:/scripts
-    
+    networks:
+      - kafka-netwrok      
   jupyterlab:
     image: jupyter/pyspark-notebook
     container_name: jupyterlab
@@ -50,7 +54,8 @@ services:
       - JUPYTER_ENABLE_LAB=yes
     ports:
       - 8888:8888
-      
+    networks:
+      - kafka-netwrok         
   topic:
     build:
       context: ./topic

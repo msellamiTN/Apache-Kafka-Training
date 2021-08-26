@@ -27,7 +27,7 @@ try:
             #print("Waiting for message or event/error in poll()")
             continue
         elif msg.error():
-            logging.info('error: {}'.format(msg.error()))
+            logging.warning('error: {}'.format(msg.error()))
         else:
             # Check for Kafka message
             record_key = msg.key()
@@ -37,8 +37,8 @@ try:
             Confirmed= data['Confirmed']
             Deaths= data['Deaths']
             Recovred= data['Recovred']
-            logging.info(Country)
-            logging.info("Consumed record with key {} and value {}, \
+            logging.warning(Country)
+            logging.warning("Consumed record with key {} and value {}, \
                   and updated total count to {}"
                   .format(record_key, record_value, record_value))
 except KeyboardInterrupt:

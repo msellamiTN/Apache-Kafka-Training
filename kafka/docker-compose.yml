@@ -47,4 +47,41 @@ services:
       - JUPYTER_ENABLE_LAB=yes
     ports:
       - 8888:8888
+      
+  topic:
+    build:
+      context: ./topic
+      dockerfile: Dockerfile
+    image: topicKafka
+    container_name: topic-Kafka
+    networks:
+      - kafka-netwrok
+    depends_on:
+      - kafka
+
+  producerKafka:
+    build:
+      context: ./producer
+      dockerfile: Dockerfile
+    depends_on:
+      - topic
+    image: producerKafka
+    container_name: producer-Kafka
+    networks:
+      - kafka-netwrok
+    depends_on:
+      - kafka
+
+  Kafkaconsumer:
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    depends_on:
+      - producteur
+    image: Kafkaconsumer
+    container_name: Kafka-consumer
+    networks:
+      - kafka-netwrok
+    depends_on:
+      - kafka    
 

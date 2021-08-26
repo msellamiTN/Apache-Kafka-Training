@@ -55,8 +55,8 @@ services:
     build:
       context: ./topic
       dockerfile: Dockerfile
-    image: topicKafka
-    container_name: topic-Kafka
+    image: topickafka
+    container_name: topic-kafka
     networks:
       - kafka-netwrok
     depends_on:
@@ -68,8 +68,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - topic
-    image: producerKafka
-    container_name: producer-Kafka
+    image: producerkafka
+    container_name: producer-kafka
     networks:
       - kafka-netwrok
     depends_on:
@@ -81,8 +81,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - producteur
-    image: Kafkaconsumer
-    container_name: Kafka-consumer
+    image: kafkaconsumer
+    container_name: kafka-consumer
     networks:
       - kafka-netwrok
     depends_on:

@@ -1,5 +1,8 @@
 ---
 version: '2'
+networks:
+  kafka-netwrok:
+    driver: bridge
 
 services:
   zookeeper:

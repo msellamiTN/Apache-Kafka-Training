@@ -1,6 +1,6 @@
 from confluent_kafka.admin import AdminClient, NewTopic
 
-a = AdminClient({'bootstrap.servers': 'kafka:9092','debug': 'broker,admin'})
+a = AdminClient({'bootstrap.servers': '198.244.143.92:29092','debug': 'broker,admin'})
 
 new_topics = [NewTopic(topic, num_partitions=3, replication_factor=1) for topic in ["coachs2", "abdata"]]
 # Note : Dans un scénario de production multi-clusters, il est plus habituel d'utiliser un facteur de réplication de 3 pour la durabilité.

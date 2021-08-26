@@ -1,6 +1,7 @@
 from confluent_kafka import Producer
 import socket
 import json
+import logging
 conf = {'bootstrap.servers': "PLAINTEXT://198.244.143.92:29092,PLAINTEXT://localhost:9092",
         'client.id': socket.gethostname()}
 
@@ -38,22 +39,26 @@ def delivery_report(err, msg):
     """ Called once for each message produced to indicate delivery result.
         Triggered by poll() or flush(). """
     if err is not None:
-        print('Message delivery failed: {}'.format(err))
+        logging.warning('Message delivery failed: {}'.format(err))
     else:
-        print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
+        logging.warning('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
  
 # Parcourir comme key-value et generer un ecrire les données (keyn value) avec p.produce
-for key, value in covid_data.items():
-    # Lancer un rappel de rapport de livraison disponible à partir d'appels de production () précédents
-    p.poll(0)
-    # Produire de manière synchrone un message, les callbacks
-    # seront déclenchés à partir de poll() au-dessus, ou de flush() au-dessous, lorsque le message a
-    # ont été livrés avec succès ou ont échoué définitivement.
-    data = json.dumps(value, ensure_ascii=False).encode('utf-8')
-    
-    p.produce(topic_name,value=data, key=str(key), callback=delivery_report)
+try:
+    while True:
+        for key, value in covid_data.items():
+            # Lancer un rappel de rapport de livraison disponible à partir d'appels de production () précédents
+            p.poll(0)
+            # Produire de manière synchrone un message, les callbacks
+            # seront déclenchés à partir de poll() au-dessus, ou de flush() au-dessous, lorsque le message a
+            # ont été livrés avec succès ou ont échoué définitivement.
+            data = json.dumps(value, ensure_ascii=False).encode('utf-8')
+            
+            p.produce(topic_name,value=data, key=str(key), callback=delivery_report)
      
-    
-# Attendre la remise des messages en attente et du rapport de remise
-# les callbacks à déclencher.
-p.flush()
+except KeyboardInterrupt:
+    pass
+finally:    
+    # Attendre la remise des messages en attente et du rapport de remise
+    # les callbacks à déclencher.
+    p.flush()

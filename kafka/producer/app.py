@@ -2,7 +2,7 @@ from confluent_kafka import Producer
 import socket
 import json
 import logging
-conf = {'bootstrap.servers': "PLAINTEXT://198.244.143.92:29092,PLAINTEXT://localhost:9092",
+conf = {'bootstrap.servers': "PLAINTEXT://198.244.141.48:29092,PLAINTEXT://localhost:9092",
         'client.id': socket.gethostname()}
 
 covid_data={

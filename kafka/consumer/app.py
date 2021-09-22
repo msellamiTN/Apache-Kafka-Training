@@ -4,7 +4,7 @@ import logging
 logging.warning('Watch out!')  # will print a message to the console
 logging.info('I told you so')  # will not print anything
 conf={
-    "bootstrap.servers": '198.244.143.92:29092',
+    "bootstrap.servers": '198.244.141.48:29092',
     "group.id": 0
     }
 #initialiser le topic
